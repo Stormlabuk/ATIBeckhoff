@@ -1,0 +1,108 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <POU Name="MAIN" Id="{4ef0117a-ae99-4538-91dd-8e8f23027317}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM MAIN
+VAR
+
+	bInit : BOOL := TRUE;	
+	fbEvaluateOffsets: EvaluateAllOffsets; // Instance of EvaluateAllOffsets
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[(*
+		This project reads the voltages from the Loadcell and transmits the data across ADS.
+		
+		1. Connect variables to hardware
+		2. Read the voltage of each channel
+		3. Convert from binary to float
+		4. transmit across ADS
+
+*)
+
+// Initiliase the offsets and transmission variables
+IF (bInit) THEN
+	
+	// Call the fucntion block that evaluates all the offsets
+	fbEvaluateOffsets();
+	
+	GVL_Transmit.fTransmitAI1 := 0.0;
+	GVL_Transmit.fTransmitAI2 := 0.0;
+	GVL_Transmit.fTransmitAI3 := 0.0;
+	GVL_Transmit.fTransmitAI4 := 0.0;
+	GVL_Transmit.fTransmitAI5 := 0.0;
+	GVL_Transmit.fTransmitAI6 := 0.0;
+	
+	bInit := FALSE;
+
+END_IF
+
+// Check whether to recalculate offsets
+IF (GVL_Receive.bCalculateOffset) THEN
+	// Call the fucntion block that evaluates all the offsets
+	fbEvaluateOffsets();
+	
+	GVL_Receive.bCalculateOffset := FALSE;
+
+END_IF
+
+// If ready to recieve, scale and transmit the data
+IF (GVL_Receive.bTransmitVoltages) THEN
+
+	// Update the Globals which will be transmitted to the control PC
+	GVL_Transmit.fTransmitAI1 := (ScaleVoltage(GVL_Receive.iRawAI1)) + GVL_Receive.fOffsetAI1;
+	GVL_Transmit.fTransmitAI2 := (ScaleVoltage(GVL_Receive.iRawAI2)) + GVL_Receive.fOffsetAI2;
+	GVL_Transmit.fTransmitAI3 := (ScaleVoltage(GVL_Receive.iRawAI3)) + GVL_Receive.fOffsetAI3;
+	GVL_Transmit.fTransmitAI4 := (ScaleVoltage(GVL_Receive.iRawAI4)) + GVL_Receive.fOffsetAI4;
+	GVL_Transmit.fTransmitAI5 := (ScaleVoltage(GVL_Receive.iRawAI5)) + GVL_Receive.fOffsetAI5;
+	GVL_Transmit.fTransmitAI6 := (ScaleVoltage(GVL_Receive.iRawAI6)) + GVL_Receive.fOffsetAI6;
+	
+ELSE
+	
+	// Not ready to transmit, only write 0.0 to the Transmit GVLs
+	GVL_Transmit.fTransmitAI1 := 0.0;
+	GVL_Transmit.fTransmitAI2 := 0.0;
+	GVL_Transmit.fTransmitAI3 := 0.0;
+	GVL_Transmit.fTransmitAI4 := 0.0;
+	GVL_Transmit.fTransmitAI5 := 0.0;
+	GVL_Transmit.fTransmitAI6 := 0.0;
+	
+END_IF]]></ST>
+    </Implementation>
+    <LineIds Name="MAIN">
+      <LineId Id="2" Count="0" />
+      <LineId Id="12" Count="0" />
+      <LineId Id="14" Count="0" />
+      <LineId Id="7" Count="0" />
+      <LineId Id="9" Count="2" />
+      <LineId Id="8" Count="0" />
+      <LineId Id="6" Count="0" />
+      <LineId Id="49" Count="0" />
+      <LineId Id="48" Count="0" />
+      <LineId Id="50" Count="1" />
+      <LineId Id="77" Count="0" />
+      <LineId Id="60" Count="0" />
+      <LineId Id="64" Count="6" />
+      <LineId Id="61" Count="1" />
+      <LineId Id="53" Count="0" />
+      <LineId Id="52" Count="0" />
+      <LineId Id="79" Count="1" />
+      <LineId Id="78" Count="0" />
+      <LineId Id="81" Count="0" />
+      <LineId Id="84" Count="2" />
+      <LineId Id="83" Count="0" />
+      <LineId Id="82" Count="0" />
+      <LineId Id="31" Count="0" />
+      <LineId Id="30" Count="0" />
+      <LineId Id="27" Count="0" />
+      <LineId Id="26" Count="0" />
+      <LineId Id="20" Count="0" />
+      <LineId Id="19" Count="0" />
+      <LineId Id="21" Count="4" />
+      <LineId Id="32" Count="2" />
+      <LineId Id="44" Count="0" />
+      <LineId Id="36" Count="4" />
+      <LineId Id="35" Count="0" />
+      <LineId Id="28" Count="1" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

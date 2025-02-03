@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <POU Name="EvaluateOffset" Id="{01115156-60d6-4074-8476-ab1312c666af}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION EvaluateOffset : REAL
+VAR_INPUT
+	fRaw : REAL;				// Voltage reading (binary) from HW
+END_VAR
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[EvaluateOffset := 0.0 - fRaw;]]></ST>
+    </Implementation>
+    <LineIds Name="EvaluateOffset">
+      <LineId Id="7" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

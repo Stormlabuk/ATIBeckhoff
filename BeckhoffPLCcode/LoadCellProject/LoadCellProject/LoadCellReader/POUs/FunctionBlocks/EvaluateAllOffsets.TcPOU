@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <POU Name="EvaluateAllOffsets" Id="{b43ff83e-9331-4770-8009-ee8ae16e2236}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK EvaluateAllOffsets
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[	
+// This function block calculates all the offsets
+
+GVL_Receive.fOffsetAI1 := EvaluateOffset(ScaleVoltage(GVL_Receive.iRawAI1));
+GVL_Receive.fOffsetAI2 := EvaluateOffset(ScaleVoltage(GVL_Receive.iRawAI2));
+GVL_Receive.fOffsetAI3 := EvaluateOffset(ScaleVoltage(GVL_Receive.iRawAI3));
+GVL_Receive.fOffsetAI4 := EvaluateOffset(ScaleVoltage(GVL_Receive.iRawAI4));
+GVL_Receive.fOffsetAI5 := EvaluateOffset(ScaleVoltage(GVL_Receive.iRawAI5));
+GVL_Receive.fOffsetAI6 := EvaluateOffset(ScaleVoltage(GVL_Receive.iRawAI6));]]></ST>
+    </Implementation>
+    <LineIds Name="EvaluateAllOffsets">
+      <LineId Id="10" Count="0" />
+      <LineId Id="17" Count="1" />
+      <LineId Id="16" Count="0" />
+      <LineId Id="11" Count="3" />
+      <LineId Id="9" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>
