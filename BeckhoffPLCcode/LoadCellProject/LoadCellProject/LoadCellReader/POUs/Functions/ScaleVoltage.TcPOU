@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.15">
+  <POU Name="ScaleVoltage" Id="{672e64ee-f73a-4659-8518-45f1601e3f45}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION ScaleVoltage : REAL
+// Straight Lie Interpolation for Scaling Analog Signals.
+// Targeted specifically for +/- 10V at 16 bit resolution
+VAR_INPUT
+	iRawInput : INT;				// Voltage reading (binary) from HW
+END_VAR
+VAR
+	iResolution : INT := 32767;		// resolution of the ADC (16 bit corresponding to 32767)
+	fVoltageLow : REAL := -10.0;	// Lower Limit of the voltage range
+	fVoltageHigh : REAL := 10.0;	// Upper Limit of the voltage range
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[// Vin = 0bRawIn/0bResolution * VoltageMeasurementRange + Offset
+
+ScaleVoltage := (INT_TO_REAL(iRawInput) / INT_TO_REAL(iResolution)) * (fVoltageHigh - fVoltageLow);// - fVoltageHigh;]]></ST>
+    </Implementation>
+    <LineIds Name="ScaleVoltage">
+      <LineId Id="16" Count="1" />
+      <LineId Id="7" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

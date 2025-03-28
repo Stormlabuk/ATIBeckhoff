@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.14">
+  <GVL Name="GVL_Transmit" Id="{9ed14b7f-51dc-4a13-8850-57902d2ae23b}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+
+// This Global variable List holds all Globals transmitted to the control PC over ADS
+VAR_GLOBAL
+	
+	fTransmitAI1 AT %Q* : REAL;			// to transmit the voltage at AI 1
+	fTransmitAI2 AT %Q* : REAL;			// to transmit the voltage at AI 2
+	fTransmitAI3 AT %Q* : REAL;			// to transmit the voltage at AI 3
+	fTransmitAI4 AT %Q* : REAL;			// to transmit the voltage at AI 4
+	fTransmitAI5 AT %Q* : REAL;			// to transmit the voltage at AI 5
+	fTransmitAI6 AT %Q* : REAL;			// to transmit the voltage at AI 6
+	
+END_VAR]]></Declaration>
+  </GVL>
+</TcPlcObject>
