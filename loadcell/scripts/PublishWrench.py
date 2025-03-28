@@ -26,11 +26,11 @@ class LoadCellPublisher(Node):
                                             [-0.0131681, -0.445029, -0.0225798, -0.446901, -0.0100986, -0.435543]])
 
         # Connect to Beckhoff PLC
-        self.plc = pyads.Connection('5.162.109.168.1.1', pyads.PORT_TC3PLC1, '192.168.1.90')
+        self.plc = pyads.Connection('5.162.109.168.1.1', pyads.PORT_TC3PLC1, '172.31.1.90')
         self.plc.open()
 
         # Set local AMS address for Ubuntu machine
-        pyads.set_local_address('192.168.1.150.1.1')
+        pyads.set_local_address('172.31.1.50.1.1')
 
         # Write to the PLC to prepare for data transmission
         self.plc.write_by_name('GVL_Receive.bCalculateOffset', True, pyads.PLCTYPE_BOOL)
