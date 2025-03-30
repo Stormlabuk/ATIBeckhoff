@@ -37,7 +37,7 @@ jobs:
         shell: bash
         run: |
           mkdir -p ros2_ws/src
-          mv laodcell ros2_ws/src
+          mv loadcell ros2_ws/src
 
       # 4) Build and test package in the workspace
       - name: Build and Test
