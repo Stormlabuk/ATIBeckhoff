@@ -1,3 +1,5 @@
+![CI/CD Status](https://github.com/Stormlabuk/ATIBeckhoff/actions/workflows/ros2_ci.yaml/badge.svg)
+
 This Repo contains code for reading the ATI loadcell through the Beckhoff PLC.
 
 ## dir descriptions
